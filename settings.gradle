@@ -1,0 +1,5 @@
+rootProject.name = 'soap-exercise'
+
+include('soapservice')
+include('backend')
+include('frontend')

@@ -1,0 +1,94 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.1'
+	id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com.snottis.exercise'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+configurations {
+	jaxws
+
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+ext.jaxwsSourceDir = "${buildDir}/generated/sources/jaxws"
+
+
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+	implementation 'org.springframework.ws:spring-ws-core:4.0.10'
+
+
+	implementation  'jakarta.jws:jakarta.jws-api:3.0.0'
+	implementation 	'jakarta.xml.ws:jakarta.xml.ws-api:4.0.1'
+	implementation	'jakarta.xml.bind:jakarta.xml.bind-api:4.0.1'
+	implementation  'com.sun.xml.ws:jaxws-tools:4.0.2'
+	implementation	'com.sun.xml.ws:jaxws-rt:4.0.2'
+	
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'io.projectreactor:reactor-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+
+
+	jaxws 'com.sun.xml.ws:jaxws-tools:4.0.2',
+		'jakarta.xml.ws:jakarta.xml.ws-api:4.0.1',
+		'jakarta.xml.bind:jakarta.xml.bind-api:4.0.1',
+		'jakarta.activation:jakarta.activation-api:2.1.2',
+		'com.sun.xml.ws:jaxws-rt:4.0.2'
+}
+
+task wsimport {
+	description = 'Generate classes from wsdl using wsimport'
+
+	doLast {
+		project.mkdir(jaxwsSourceDir)
+		ant {
+			taskdef(name: 'wsimport',
+					classname: 'com.sun.tools.ws.ant.WsImport',
+					classpath: configurations.jaxws.asPath
+			)
+			wsimport(
+					keep: true,
+					destdir: jaxwsSourceDir,
+					extension: "true",
+					verbose: true,
+					binding: "${projectDir}/src/main/resources/async_mapping.xml",
+					wsdl: "http://localhost:8080/ws/countries.wsdl",
+					xnocompile: true,
+					package: "com.snottis.exercise.backend.wsdl") {
+				xjcarg(value: "-XautoNameResolution")
+			}
+		}
+	}
+}
+
+sourceSets {
+	main {
+		java.srcDirs += jaxwsSourceDir
+	}
+}
+
+compileJava {
+	dependsOn wsimport
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

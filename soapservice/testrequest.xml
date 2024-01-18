@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+    xmlns:gs="countries">
+    <soapenv:Header />
+    <soapenv:Body>
+        <gs:findCountries>
+            <gs:minPopulation>2000000</gs:minPopulation>
+        </gs:findCountries>
+    </soapenv:Body>
+</soapenv:Envelope>
