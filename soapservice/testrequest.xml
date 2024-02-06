@@ -2,8 +2,8 @@
     xmlns:gs="countries">
     <soapenv:Header />
     <soapenv:Body>
-        <gs:findCountries>
-            <gs:minPopulation>2000000</gs:minPopulation>
-        </gs:findCountries>
+        <gs:findCountriesRequest>
+            <gs:name>Finland</gs:name>
+        </gs:findCountriesRequest>
     </soapenv:Body>
 </soapenv:Envelope>

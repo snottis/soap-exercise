@@ -29,7 +29,7 @@ public class ReactiveSoapClient {
         this.soapServiceUrl = soapServiceUrl;
     }
 
-    public <T> ResponseSpec call(T request, String soapHeaderContent)
+    public <T, G> Mono<G> call(T request, String soapHeaderContent, Class<G> returnClass)
             throws SOAPException, ParserConfigurationException, IOException {
         SoapEnvelopeRequest soapEnvelopeRequest = new SoapEnvelopeRequest(soapHeaderContent, request);
 
@@ -37,7 +37,8 @@ public class ReactiveSoapClient {
                 .uri(soapServiceUrl)
                 .contentType(MediaType.TEXT_XML)
                 .body(Mono.just(soapEnvelopeRequest), SoapEnvelopeRequest.class)
-                .retrieve();
+                .retrieve()
+                .bodyToMono(returnClass);
     }
 
     // public void call(FindCountriesRequest findCountriesRequest, String

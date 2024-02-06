@@ -1,5 +1,6 @@
 rootProject.name = 'soap-exercise'
 
 include('soapservice')
+include('grpcservice')
 include('backend')
 include('frontend')

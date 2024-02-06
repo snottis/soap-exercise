@@ -35,7 +35,7 @@ public class CountryController {
         System.out.println("country : " + country);
         GetCountryRequest request = new GetCountryRequest();
         request.setName(country);
-        return reactiveSoapClient.call(request, null).bodyToMono(GetCountryResponse.class);
+        return reactiveSoapClient.call(request, null, GetCountryResponse.class);
     }
 
     // @PostMapping("/country/find")

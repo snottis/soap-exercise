@@ -24,7 +24,7 @@
     <xs:element name="findCountriesResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="country" maxOccurs="unbounded" type="tns:country" />
+                <xs:element name="countries" maxOccurs="unbounded" type="tns:country" />
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -32,7 +32,7 @@
     <xs:element name="getCountryResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="country" maxOccurs="unbounded" type="tns:country" />
+                <xs:element name="country" type="tns:country" />
             </xs:sequence>
         </xs:complexType>
     </xs:element>

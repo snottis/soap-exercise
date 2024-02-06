@@ -26,16 +26,17 @@ public class CountryEndpoint {
     @ResponsePayload
     public GetCountryResponse getCountry(@RequestPayload GetCountryRequest request) {
         GetCountryResponse response = new GetCountryResponse();
-        response.getCountry().add(countryRepository.findCountryByName(request.getName()));
+
+        response.setCountry(countryRepository.findCountryByName(request.getName()));
 
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE, localPart = "findCountries")
+    @PayloadRoot(namespace = NAMESPACE, localPart = "findCountriesRequest")
     @ResponsePayload
     public FindCountriesResponse findCountries(@RequestPayload FindCountriesRequest request) {
         FindCountriesResponse response = new FindCountriesResponse();
-        List<Country> countryList = response.getCountry();
+        List<Country> countryList = response.getCountries();
         System.out.println(request);
         countryRepository
                 .findCountries(Optional.ofNullable(request.getName()),
