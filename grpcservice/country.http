@@ -1,0 +1,13 @@
+proto < ./src/main/proto/country.proto
+
+GRPC localhost:6565/CountryService/findByGDP
+{
+    "minimumGdp": 100
+}
+GRPC localhost:6565/CountryService/findByGDP
+{
+    "min": 1
+}
+===
+GET http://localhost:6565 HTTP/2
+        /

@@ -6,8 +6,8 @@ option java_package = "com.snottis.example.grpcservice.country.model";
 option java_outer_classname = "CountryProto";
 
 service CountryService {
-    rpc FindCountryByName (FindByNameRequest) returns (Country) {}
-    rpc FindByGDP (FindByRequest) returns (Countries) {}
+    rpc findCountryByName (FindByNameRequest) returns (Country) {}
+    rpc findByGDP (FindByRequest) returns (Countries) {}
 }
 
 message FindByNameRequest {
@@ -15,8 +15,8 @@ message FindByNameRequest {
 }
 
 message FindByRequest {
-    float minimumGdp = 1;
-    float maximumGdp = 2;
+    optional float minimumGdp = 1;
+    optional float maximumGdp = 2;
 }
 
 message Country {

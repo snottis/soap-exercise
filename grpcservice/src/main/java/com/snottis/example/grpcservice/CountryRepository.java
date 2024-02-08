@@ -9,9 +9,11 @@ import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 
 public interface CountryRepository extends ReactiveCrudRepository<Country, Long> {
 
-    @Query("SELECT * FROM country WHERE name = :name")
+    @Query("SELECT * FROM country WHERE country_name = :name")
     Flux<Country> findByCountryName(String name);
 
-    @Query("SELECT * FROM country WHERE gdp >= :minGdp AND gdp <= :maxGdp")
+    @Query("SELECT * FROM country WHERE "
+            + "(:minGdp IS NULL OR gdp >= :minGdp) AND"
+            + "(:maxGdp IS NULL OR gdp <= :maxGdp)")
     Flux<Country> findByMinMaxGdp(Float minGdp, Float maxGdp);
 }
